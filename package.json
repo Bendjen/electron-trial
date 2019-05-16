@@ -1,0 +1,57 @@
+{
+  "name": "electron-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder"
+  },
+  "build": {
+    "productName": "electron-app",
+    "appId": "bendjen.0.1",
+    "directories": {
+      "output": "dist"
+    },
+    "mac": {
+      "icon": "icons/512x512.png"
+    },
+    "win": {
+      "icon": "icons/512x512.png",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "linux": {
+      "icon": "build/512x512.png"
+    },
+    "nsis": {
+      "oneClick": false, 
+      "allowElevation": true, 
+      "allowToChangeInstallationDirectory": true, 
+      "installerIcon": "./icons/installerIcon.ico",
+      "uninstallerIcon": "./icons/uninstallerIcon.ico",
+      "installerHeaderIcon": "./icons/installerIcon.ico", 
+      "createDesktopShortcut": true, 
+      "createStartMenuShortcut": true,
+      "shortcutName": "electron-app"
+    },
+    "publish": [
+      {
+        "provider": "generic", 
+        "url": "http://xxxxx/"
+      }
+    ]
+  },
+  "author": "bendjen",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^5.0.1",
+    "electron-builder": "^20.40.2"
+  }
+}
