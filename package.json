@@ -2,10 +2,11 @@
   "name": "electron-app",
   "version": "1.0.0",
   "description": "",
-  "main": "main.js",
+  "main": "src/main/main.js",
   "scripts": {
-    "start": "electron .",
-    "dist": "electron-builder"
+    "start": "cross-env NODE_ENV=development electron .",
+    "dist:dir": "cd src/renderer && yarn build && cd ../.. && electron-builder --dir",
+    "dist": "cd src/renderer && yarn build && cd ../.. && electron-builder"
   },
   "build": {
     "productName": "electron-app",
@@ -31,19 +32,19 @@
       "icon": "build/512x512.png"
     },
     "nsis": {
-      "oneClick": false, 
-      "allowElevation": true, 
-      "allowToChangeInstallationDirectory": true, 
+      "oneClick": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
       "installerIcon": "./icons/installerIcon.ico",
       "uninstallerIcon": "./icons/uninstallerIcon.ico",
-      "installerHeaderIcon": "./icons/installerIcon.ico", 
-      "createDesktopShortcut": true, 
+      "installerHeaderIcon": "./icons/installerIcon.ico",
+      "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
       "shortcutName": "electron-app"
     },
     "publish": [
       {
-        "provider": "generic", 
+        "provider": "generic",
         "url": "http://xxxxx/"
       }
     ]
@@ -51,6 +52,7 @@
   "author": "bendjen",
   "license": "ISC",
   "devDependencies": {
+    "cross-env": "^5.2.0",
     "electron": "^5.0.1",
     "electron-builder": "^20.40.2"
   }
