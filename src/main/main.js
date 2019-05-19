@@ -32,13 +32,14 @@ function createWindow() {
         }))
     }
 
-    // 添加扩展
-    BrowserWindow.addDevToolsExtension(
-		path.join(__dirname, '../../extensions/react-devtools')
-	);
-
-    // 打开开发者工具
-    win.webContents.openDevTools()
+    if (isDev()) {
+        // 添加扩展
+        BrowserWindow.addDevToolsExtension(
+            path.join(__dirname, '../../extensions/react-devtools')
+        );
+        // 打开开发者工具
+        win.webContents.openDevTools()
+    }
 
     // 当 window 被关闭，这个事件会被触发。
     win.on('closed', () => {

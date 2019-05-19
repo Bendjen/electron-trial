@@ -16,7 +16,16 @@
 2.复制 shell/chromes/build/unpacked 文件夹到 extensions下命名为react-devtools
 3.在主进程ready事件中添加BrowserWindow.addDevToolsExtension(path.join(__dirname, '../../extensions/react-devtools'));
 
-# 7.如何解压并解密打包的文件
+# 8.如何解压并解密打包的文件
 
 1.npm install asar -g
 2.asar extract app.asar ./unpacked
+
+# 9.如何减小打包的体积
+
+不要将node_modules打包进来
+在package.json的build.files配置中指定需要打包的文件夹
+
+# 10.如何配置安装包手动选择安装目录
+
+见package.json的build.nsis配置
