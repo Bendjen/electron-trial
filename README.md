@@ -1,8 +1,18 @@
 # 1.如何减少打包后的安装包体积
 
+不要将node_modules打包进来
+在package.json的build.files配置中指定需要打包的文件夹
+
 # 2.electron的目录结构，有几个package.json
 
+electron-vue实现了单package.json的目录结构，还没研究明白怎么做到的，先用双package.json结构
+
 # 3.如何一个命令完成renderer的编译和elctron.
+
+通过npm-run-all包进行队列或者并行任务
+yarn start : 并行运行renderer进程的dev和main进程的dev（在渲染进程完成后需要用ctrl+R进行刷新）
+yarn dist : 队列执行renderer进程的打包和electron-app的打包
+yarn dist:dir : 同yarn dist，但是是打包免安装版
 
 # 4.本地开发环境请求接口的代理
 
@@ -21,11 +31,11 @@
 1.npm install asar -g
 2.asar extract app.asar ./unpacked
 
-# 9.如何减小打包的体积
-
-不要将node_modules打包进来
-在package.json的build.files配置中指定需要打包的文件夹
-
-# 10.如何配置安装包手动选择安装目录
+# 9.如何配置安装包手动选择安装目录
 
 见package.json的build.nsis配置
+
+# 10.如何配置安装和卸载图标以及应用图标
+
+不用平台的图标对尺寸和格式的要求不同 详见https://www.electron.build/icons
+安装和卸载的图标件package.json的build.nsis配置
