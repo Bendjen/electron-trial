@@ -1,7 +1,7 @@
 const url = require('url')
 const path = require('path')
 const electron = require('electron')
-const BrowserWindow = electron.BrowserWindow
+const { BrowserWindow, globalShortcut } = electron
 const Menu = electron.Menu
 const app = electron.app
 
@@ -17,8 +17,7 @@ function createWindow() {
 
     // 创建菜单
     // const menu = Menu.buildFromTemplate(template)
-    // Menu.setApplicationMenu(menu)
-    // menu.closePopup([win])
+    Menu.setApplicationMenu(null)
 
     // 然后加载应用的 index.html。
     if (isDev()) {
@@ -37,9 +36,20 @@ function createWindow() {
         BrowserWindow.addDevToolsExtension(
             path.join(__dirname, '../../extensions/react-devtools')
         );
-        // 打开开发者工具
-        win.webContents.openDevTools()
     }
+
+    // 监听快捷键
+    // 刷新
+    globalShortcut.register('Ctrl+R', () => {
+        win.reload()
+    })
+
+    // 切换开发者工具
+    globalShortcut.register('Ctrl+F12', () => {
+        win.webContents.toggleDevTools()
+    })
+
+
 
     // 当 window 被关闭，这个事件会被触发。
     win.on('closed', () => {
@@ -54,6 +64,12 @@ function createWindow() {
 // 创建浏览器窗口时，调用这个函数。
 // 部分 API 在 ready 事件触发后才能使用。
 app.on('ready', createWindow)
+
+// 退出前注销快捷键
+app.on('will-quit', () => {
+    // 注销所有快捷键
+    globalShortcut.unregisterAll()
+})
 
 // 当全部窗口关闭时退出。
 app.on('window-all-closed', () => {

@@ -39,3 +39,9 @@ yarn dist:dir : 同yarn dist，但是是打包免安装版
 
 不用平台的图标对尺寸和格式的要求不同 详见https://www.electron.build/icons
 安装和卸载的图标件package.json的build.nsis配置
+
+# 开发者工具与页面刷新
+
+默认开启new的状态下，可以直接通过ctrl+R和F12刷新，但是setApplicationMenu(null)后快捷键变为不支持
+所以需要手动添加监听，通过win.reload()和win.webContents.toggleDevTools()来实现
+需要说明的时手动监听的快捷键不支持纯普通按键，所以需要添加成ctrl+F12
