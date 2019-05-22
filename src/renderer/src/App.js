@@ -1,8 +1,9 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import 'antd/dist/antd.css'
 import { Button } from 'antd';
+// renderer进程可以不使用electron-connect用自带的热更新
+// require('electron-connect').client.create()
 
 function App() {
   return (
@@ -11,7 +12,7 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <Button type="primary">Primary</Button>
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Edittt <code>src/App.js</code> and save to reload.
         </p>
         <a
           className="App-link"

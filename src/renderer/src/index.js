@@ -4,6 +4,7 @@ import 'antd/dist/antd.css'
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+require('electron-connect').client.create()
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

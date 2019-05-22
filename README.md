@@ -45,3 +45,8 @@ yarn dist:dir : 同yarn dist，但是是打包免安装版
 默认开启new的状态下，可以直接通过ctrl+R和F12刷新，但是setApplicationMenu(null)后快捷键变为不支持
 所以需要手动添加监听，通过win.reload()和win.webContents.toggleDevTools()来实现
 需要说明的时手动监听的快捷键不支持纯普通按键，所以需要添加成ctrl+F12
+
+## 12.process 的重启和刷新
+使用 electron-connect配合gulp
+注意使用 electron-connect后直接electron .命令调用主进程会报错，必须用gulp watch:electron启动
+https://segmentfault.com/a/1190000006186553

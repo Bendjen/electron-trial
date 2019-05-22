@@ -4,6 +4,7 @@ const electron = require('electron')
 const { BrowserWindow, globalShortcut } = electron
 const Menu = electron.Menu
 const app = electron.app
+const client = require('electron-connect').client;
 
 let win
 
@@ -58,7 +59,10 @@ function createWindow() {
         // 与此同时，你应该删除相应的元素。
         win = null
     })
+
+    client.create(win);
 }
+
 
 // Electron 会在初始化后并准备
 // 创建浏览器窗口时，调用这个函数。

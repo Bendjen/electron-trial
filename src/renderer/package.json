@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "babel-plugin-import": "^1.11.2",
+    "electron-connect": "^0.6.3",
     "react-app-rewired": "^2.1.3"
   }
 }
