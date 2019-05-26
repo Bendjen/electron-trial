@@ -4,13 +4,17 @@ const electron = require('electron')
 const { BrowserWindow, globalShortcut } = electron
 const Menu = electron.Menu
 const app = electron.app
-const client = require('electron-connect').client;
+// const client = require('electron-connect').client;
 
 let win
 
 function isDev() {
     return process.env['NODE_ENV'] === 'development'
 }
+
+
+console.log('NODE_ENV')
+console.log(process.env['NODE_ENV'])
 
 function createWindow() {
     // 创建浏览器窗口
@@ -60,7 +64,7 @@ function createWindow() {
         win = null
     })
 
-    client.create(win);
+    // client.create(win);
 }
 
 

@@ -47,6 +47,11 @@ yarn dist:dir : 同yarn dist，但是是打包免安装版
 需要说明的时手动监听的快捷键不支持纯普通按键，所以需要添加成ctrl+F12
 
 ## 12.process 的重启和刷新
-使用 electron-connect配合gulp
-注意使用 electron-connect后直接electron .命令调用主进程会报错，必须用gulp watch:electron启动
+方法1.使用 electron-connect配合gulp
+注意：使用 electron-connect后直接electron .命令调用主进程会报错，
 https://segmentfault.com/a/1190000006186553
+这种方法是在主进程中注入了electron-connect服务，然后通过glup对文件监听，再调用服务的restart和reload从而实现开发环境的搭建
+所以必须用gulp watch:electron启动，而不是默认了electron命令 electron. 使用默认的命令要去掉主进程中的electron-connect相关方法
+
+方法2.使用webpack的nodejs API手动编写对webpack.compiler的hooks监听
+流程是 1.通过nodejs编译并watch主进程代码 2.通过nodejs编译渲染进程的代码 3.启动electron并监听localhost窗口
