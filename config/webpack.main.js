@@ -1,10 +1,8 @@
 'use strict'
 
 process.env.BABEL_ENV = 'main'
-process.env.BABEL_ENV = 'main'
 
 const path = require('path')
-const { dependencies } = require('../package.json')
 const webpack = require('webpack')
 
 // const BabiliWebpackPlugin = require('babili-webpack-plugin')
@@ -14,9 +12,6 @@ let mainConfig = {
         main: path.join(__dirname, '../src/main/main.js')
     },
     mode: "development",    // 这里的mode一定要声明，因为默认mode是production会覆盖之前的环境
-    externals: [
-        ...Object.keys(dependencies || {})
-    ],
     module: {
         rules: [
             {

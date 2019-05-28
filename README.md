@@ -46,12 +46,49 @@ yarn dist:dir : 同yarn dist，但是是打包免安装版
 所以需要手动添加监听，通过win.reload()和win.webContents.toggleDevTools()来实现
 需要说明的时手动监听的快捷键不支持纯普通按键，所以需要添加成ctrl+F12
 
-## 12.process 的重启和刷新
-方法1.使用 electron-connect配合gulp
-注意：使用 electron-connect后直接electron .命令调用主进程会报错，
-https://segmentfault.com/a/1190000006186553
+## 12.开发环境搭建
+
+方式 1. 使用electron-connect配合gulp
+
+(1) 在主进程插入electron-connect服务
+(2) 启动renderer的编译的开发模式（脚手架自带的dev-server）
+(3) 启动gulp任务开启electron窗口，并建立elecron-connect服务，实现主进程代码watch触发electron的reload和restart
+
 这种方法是在主进程中注入了electron-connect服务，然后通过glup对文件监听，再调用服务的restart和reload从而实现开发环境的搭建
 所以必须用gulp watch:electron启动，而不是默认了electron命令 electron. 使用默认的命令要去掉主进程中的electron-connect相关方法
 
-方法2.使用webpack的nodejs API手动编写对webpack.compiler的hooks监听
-流程是 1.通过nodejs编译并watch主进程代码 2.通过nodejs编译渲染进程的代码 3.启动electron并监听localhost窗口
+优点：1.可以直接使用react/vue的脚手架，不用搭建renderer的开发环境；
+     2.使用electron-connect配合glup实现main的热重载
+
+缺点：1.双package.json架构，需要分开安装main和renderer的依赖
+      2.通过npm-run-all并行运行script命令，不是异步启动electron窗口，所以窗口打开后是空白的（renderer进程还没完成编译），需要过一会刷新一下，不够优雅
+
+注意：使用 electron-connect后直接electron .命令调用主进程会报错，
+相关链接：https://segmentfault.com/a/1190000006186553
+
+方式 2. 模仿electron-vue，利用webpack nodeAPI分别编译main、renderer进程
+(1) 分别封装main、renderer的webpack complier的Promise
+(2) 在上面两个Promise都resolve后，启用一个子进程运行shell命令启动elctron .
+
+优点：1.electron窗口可以在main和renderer进程编译后再启动，避免了刚启动白屏的问题
+     2.利用node进行webpack的编译任务更加灵活方便根据自己的需求进行变更配置
+     3.因为webpack编译任务是自己用node进行运行的，可以自己配置入口出口，所以是单package.json的架构
+
+缺点：1.需要用node进行webapck的任务，利用webpack-hot-middleware和webpack-dev-server完成监听和热重载，配置起来相对复杂
+      2.renderer不能直接使用脚手架生成，所以也要自己搭建renderer的开发环境
+
+方式 3. 结合以上两种方式，renderer直接采用脚手架生成，用node搭建electron的开发环境和main的热重载
+(1) 生成一个promise用node主进程编译main进程的代码，并监听重载
+(2) 生成一个promise用node子进程执行renderer脚手架中的start命令来创建renderer的开发环境，这样就不用手动搭建，监听子进程对控制台的输出，来判断resolve的时机，
+    这里是判断Complited文字来判断是否renderer完成的编译（在renderer的命令源码里关掉自动打开浏览器窗口，如果有的话）
+(3) 在上面两个Promise都resolve后，启用一个子进程运行shell命令启动elctron .
+
+优点：1.electron窗口可以在main和renderer进程编译后再启动，避免了刚启动白屏的问题
+     2.不用手动搭建renderer的开发环境，充分利用用各主流cli自带的开发环境
+     3.renderer本身也是一个独立干净的项目，可以独立发布在非electron的环境中（如果有使用main进程的能力需要手动剔除）
+          
+缺点：1.双package.json架构，需要分开安装main和renderer的依赖（不过这样也有优点，代码更独立）
+      
+
+## 13.如何用node执行shell命令
+node自带的child_process可以用exec或spawn方法运行shell命令

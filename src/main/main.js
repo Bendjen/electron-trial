@@ -12,9 +12,7 @@ function isDev() {
     return process.env['NODE_ENV'] === 'development'
 }
 
-
-console.log('NODE_ENV')
-console.log(process.env['NODE_ENV'])
+console.log(`NODE_ENV=${process.env['NODE_ENV']}`)
 
 function createWindow() {
     // 创建浏览器窗口
@@ -66,7 +64,6 @@ function createWindow() {
 
     // client.create(win);
 }
-
 
 // Electron 会在初始化后并准备
 // 创建浏览器窗口时，调用这个函数。
