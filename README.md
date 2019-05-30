@@ -58,15 +58,16 @@ yarn dist:dir : 同yarn dist，但是是打包免安装版
 所以必须用gulp watch:electron启动，而不是默认了electron命令 electron. 使用默认的命令要去掉主进程中的electron-connect相关方法
 
 优点：1.可以直接使用react/vue的脚手架，不用搭建renderer的开发环境；
-     2.使用electron-connect配合glup实现main的热重载
+     2.使用electron-connect配合glup实现main的重载，比较
 
 缺点：1.双package.json架构，需要分开安装main和renderer的依赖
       2.通过npm-run-all并行运行script命令，不是异步启动electron窗口，所以窗口打开后是空白的（renderer进程还没完成编译），需要过一会刷新一下，不够优雅
+      3.脚手架webpack的target一般是设置为web，这会使得应用无法使用node的能力，在纯web应用electron化的时候可以使用这种方式
 
 注意：使用 electron-connect后直接electron .命令调用主进程会报错，
 相关链接：https://segmentfault.com/a/1190000006186553
 
-方式 2. 模仿electron-vue，利用webpack nodeAPI分别编译main、renderer进程
+方式 2. 模仿electron-vue，利用webpack nodeAPI分别编译main、renderer进程 （当前采用的）
 (1) 分别封装main、renderer的webpack complier的Promise
 (2) 在上面两个Promise都resolve后，启用一个子进程运行shell命令启动elctron .
 
@@ -87,7 +88,8 @@ yarn dist:dir : 同yarn dist，但是是打包免安装版
 优点：1.electron窗口可以在main和renderer进程编译后再启动，避免了刚启动白屏的问题
      2.不用手动搭建renderer的开发环境，充分利用用各主流cli自带的开发环境
      3.renderer本身也是一个独立干净的项目，可以独立发布在非electron的环境中（如果有使用main进程的能力需要手动剔除）
-          
+      4.脚手架webpack的target一般是设置为web，这会使得应用无法使用node的能力，在纯web应用electron化的时候可以使用这种方式
+
 缺点：1.双package.json架构，需要分开安装main和renderer的依赖（不过这样也有优点，代码更独立）
       2.主进程退出后，运行renderer的子进程仍在运行
 
