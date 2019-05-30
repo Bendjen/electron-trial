@@ -79,7 +79,8 @@ yarn dist:dir : 同yarn dist，但是是打包免安装版
 
 方式 3. 结合以上两种方式，renderer直接采用脚手架生成，用node搭建electron的开发环境和main的热重载
 (1) 生成一个promise用node主进程编译main进程的代码，并监听重载
-(2) 生成一个promise用node子进程执行renderer脚手架中的start命令来创建renderer的开发环境，这样就不用手动搭建，监听子进程对控制台的输出，来判断resolve的时机，
+(2) 生成一个promise用node子进程执行renderer脚手架中的start命令来创建renderer的开发环境，这样就不用手动搭建，监听子进程对控制台的输出(一般脚手架都会在完成编译时有一个提示，
+理想的做法应该时在脚手架源码中send一个事件，在外面用message去监听)，来判断resolve的时机，
     这里是判断Complited文字来判断是否renderer完成的编译（在renderer的命令源码里关掉自动打开浏览器窗口，如果有的话）
 (3) 在上面两个Promise都resolve后，启用一个子进程运行shell命令启动elctron .
 
@@ -88,7 +89,15 @@ yarn dist:dir : 同yarn dist，但是是打包免安装版
      3.renderer本身也是一个独立干净的项目，可以独立发布在非electron的环境中（如果有使用main进程的能力需要手动剔除）
           
 缺点：1.双package.json架构，需要分开安装main和renderer的依赖（不过这样也有优点，代码更独立）
-      
+      2.主进程退出后，运行renderer的子进程仍在运行
 
 ## 13.如何用node执行shell命令
 node自带的child_process可以用exec或spawn方法运行shell命令
+
+## 14.node如何关闭子进程
+主线程的kill方法并不是真的使子进程退出，而是会触发子进程的SIGHUP事件，真正的退出还是依靠process.exit()
+
+## 15.elctron窗口白屏，报错require is not defined
+这是由于electron的renderer进程没有开启node环境，之前版本的electron的渲染进程默认node环境是开启的，而当前用的版本出于安全考虑（5.0）默认是关闭的
+当webpack对renderer的代码进行编译时target设置为了'electron-renderer'，而在窗口中由于没有开启node环境就会报require is not defined（require是node的方法）
+还有一种解决方法是把webpack的target还原成默认值'web'，这样降级处理就会无法使用node的能力，如果不需要的话可以这么处理

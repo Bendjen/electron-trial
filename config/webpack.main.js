@@ -25,6 +25,7 @@ let mainConfig = {
             }
         ]
     },
+    // 为nodejs代码在浏览器等其他环境中运行，进行polyfill或模拟nodejs的全局变量和模块
     node: {
         __dirname: process.env.NODE_ENV !== 'production',
         __filename: process.env.NODE_ENV !== 'production'
@@ -40,7 +41,8 @@ let mainConfig = {
     resolve: {
         extensions: ['.js', '.json', '.node']
     },
-    //编译为 Electron 主进程
+    // 这里一定要声明目标环境是electron-main，否则在主进程编译过程中就会报错
+    // 默认的web目标环境中缺少electron-main下的许多node和electron全局模块
     target: 'electron-main'
 };
 

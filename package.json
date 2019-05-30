@@ -67,23 +67,23 @@
     "autoprefixer": "^9.5.1",
     "babel-loader": "^8.0.6",
     "cross-env": "^5.2.0",
+    "css-loader": "^2.1.1",
     "electron": "^5.0.1",
     "electron-builder": "^20.40.2",
     "electron-connect": "^0.6.3",
     "gulp": "^4.0.2",
-    "npm-run-all": "^4.1.5",
-    "webpack": "^4.32.2",
-    "webpack-dev-server": "^3.4.1",
-    "webpack-hot-middleware": "^2.25.0"
-  },
-  "dependencies": {
-    "css-loader": "^2.1.1",
+    "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.7.0",
     "node-sass": "^4.12.0",
+    "npm-run-all": "^4.1.5",
     "postcss-loader": "^3.0.0",
     "raw-loader": "^2.0.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
-    "url-loader": "^1.1.2"
-  }
+    "url-loader": "^1.1.2",
+    "webpack": "^4.32.2",
+    "webpack-dev-server": "^3.4.1",
+    "webpack-hot-middleware": "^2.25.0"
+  },
+  "dependencies": {}
 }
