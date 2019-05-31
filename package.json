@@ -4,26 +4,19 @@
   "description": "",
   "main": "app/main/main.js",
   "scripts": {
-    "start": "run-p dev:renderer watch:electron",
-    "dist": "run-s dist:renderer pack",
-    "dist:dir": "run-s dist:renderer pack:dir",
-    "watch:electron": "gulp watch:electron",
-    "dev:main": "cross-env NODE_ENV=development electron .",
-    "dev:renderer": "cd src/renderer && yarn start",
-    "dist:renderer": "cd src/renderer && yarn build",
-    "pack": "electron-builder",
-    "pack:dir": "electron-builder --dir",
-    "newstart": "cross-env NODE_ENV=development node ./scripts/development.js"
+    "start": "cross-env NODE_ENV=development node ./scripts/dev.js",
+    "dist": "cross-env NODE_ENV=production node ./scripts/dist.js && electron-builder --dir",
+    "pack": "cross-env NODE_ENV=production node ./scripts/dist.js && electron-builder"
   },
   "build": {
     "productName": "electron-app",
-    "appId": "bendjen.0.1",
+    "appId": "bendjen.1.0",
     "directories": {
       "output": "dist"
     },
     "files": [
-      "src/main",
-      "src/renderer/build"
+      "app",
+      "extensions"
     ],
     "mac": {
       "icon": "icons/512x512.png"

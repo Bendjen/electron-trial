@@ -1,7 +1,5 @@
 'use strict'
 
-process.env.BABEL_ENV = 'main'
-
 const path = require('path')
 const webpack = require('webpack')
 
@@ -11,7 +9,7 @@ let mainConfig = {
     entry: {
         main: path.join(__dirname, '../src/main/main.js')
     },
-    mode: "development",    // 这里的mode一定要声明，因为默认mode是production会覆盖之前的环境
+    mode: process.env.NODE_ENV,    // 这里的mode如果不声明会用默认的development覆盖其他地方的声明
     module: {
         rules: [
             {

@@ -1,13 +1,10 @@
 const path = require("path");
-const pck = require('../package.json')
 
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { dependencies } = pck
 
 const ifDevMode = process.env.NODE_ENV !== "production";
 const rootDir = path.resolve(__dirname, "../");
-let whiteListedModules = ['vue']
 
 module.exports = {
   mode: process.env.NODE_ENV,
@@ -16,11 +13,8 @@ module.exports = {
   output: {
     path: path.resolve(rootDir, "app/renderer"),
     filename: `renderer.all.js`,
-    publicPath: '/'    // 在HtmlWebpackPlugin开启时会影响html里的引用路径
+    publicPath: './'    // 在HtmlWebpackPlugin开启时会影响html里的引用路径
   },
-  externals: [
-    ...Object.keys(dependencies || {}).filter(d => !whiteListedModules.includes(d))
-  ],
   plugins: [
     new MiniCssExtractPlugin({
       filename: `renderer.all.css`,
@@ -61,6 +55,7 @@ module.exports = {
   },
 
   // electron的renderer环境不只是单纯的浏览器环境，因为electron的renderer里面是可以调用node的功能
+  // electron5.0版本窗口的默认node能力是关闭的需要手动打开 webPreferences.nodeIntegration
   target: 'electron-renderer'
 }
 
