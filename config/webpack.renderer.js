@@ -8,6 +8,7 @@ const rootDir = path.resolve(__dirname, "../");
 
 module.exports = {
   mode: process.env.NODE_ENV,
+  devtool: 'inline-source-map',
   watch: ifDevMode,
   entry: path.resolve(rootDir, "src/renderer/index.js"),
   output: {
@@ -21,9 +22,8 @@ module.exports = {
       chunkFilename: "[id].css"
     }),
     new HtmlWebpackPlugin({
-      nodeModules: process.env.NODE_ENV !== 'production'
-        ? path.resolve(__dirname, '../node_modules')
-        : false,
+      title: 'Bendjen',
+      template: path.resolve(rootDir, "public/index.html")
     })
   ],
   node: {
@@ -35,11 +35,9 @@ module.exports = {
       { test: /\.tpl|xtpl$/, use: "raw-loader" },
       { test: /\.(ttf|eot|svg|woff|woff2)$/, use: "url-loader" },
       {
-        test: /\.js$/,
-        use: {
-          loader: "babel-loader"
-        },
-        exclude: "/node_modules/"
+        test: /\.js|jsx$/,
+        use: "babel-loader",
+        exclude: "/node_modules/",
       },
       {
         test: /\.css|scss$/,
@@ -53,7 +51,11 @@ module.exports = {
       }
     ]
   },
-
+  resolve: {
+    alias: {
+      "@": path.join(__dirname, '../src/renderer/')
+    }
+  },
   // electron的renderer环境不只是单纯的浏览器环境，因为electron的renderer里面是可以调用node的功能
   // electron5.0版本窗口的默认node能力是关闭的需要手动打开 webPreferences.nodeIntegration
   target: 'electron-renderer'

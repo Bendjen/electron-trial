@@ -1,6 +1,7 @@
 const path = require("path");
 const webpack = require('webpack');
 const webpackDevServer = require('webpack-dev-server');
+const webpackHotMiddleware = require('webpack-hot-middleware')
 const child_process = require('child_process')
 const electron = require('electron')
 const chalk = require('chalk')
@@ -25,7 +26,7 @@ function devMain() {
     return new Promise((resolve, reject) => {
         console.log(chalk.yellow.bold('START COMPLITING MAIN PROCESS...'))
         const compiler = webpack(mainWebpackConfig);
-        compiler.hooks.afterCompile.tap('MainComplited',(compilation)=>{
+        compiler.hooks.afterCompile.tap('MainComplited', (compilation) => {
             console.log(chalk.yellow.bold('MAIN PROCESS COMPLITED'))
         })
         compiler.watch({
@@ -58,25 +59,53 @@ function devRenderer() {
     return new Promise((resolve, reject) => {
         console.log(chalk.blue.bold('START COMPLITING RENDERER PROCESS...'))
         const compiler = webpack(rendererWebpackConfig);
-        compiler.hooks.afterCompile.tap('RendererComplited',(compilation)=>{
-            console.log(chalk.blue.bold('RENDERER PROCESS COMPLITED...'))
+        const hotMiddleware = webpackHotMiddleware(compiler, {
+            log: false,
+            heartbeat: 2500
         })
+
+        // force page reload when html-webpack-plugin template changes
+        // compiler.plugin('compilation', compilation => {
+        //     compilation.plugin('html-webpack-plugin-after-emit', (data, cb) => {
+        //         console.log(88888888888)
+        //         console.log(88888888888)
+        //         console.log(88888888888)
+        //         console.log(88888888888)
+        //         hotMiddleware.publish({ action: 'reload' })
+        //         cb()
+        //     })
+        // })
+        // compiler.hooks.compilation.tap('RendererCompliting', (compilation) => {
+        //     compilation.hooks.afterOptimizeAssets.tap('FinishRendererComplites', () => {
+        //         console.log(chalk.blue.bold('RENDERER PROCESS COMPLITED'))
+        //         hotMiddleware.publish({ action: 'reload' })
+        //         resolve()
+        //     })
+        // })
+
+        // devServer会自动刷新页面在webpackConfig的target为web的情况下，当target为electron-renderer时需要用webpack-hot-middleware实现
+
         const server = new webpackDevServer(compiler, {
             // 启动服务后 localhost对应的目录，取该目录下的index.html作为localhost根目录对应的返回
             // 注意：如果webpack配置中使用了HtmlWebpackPlugin插件,生成的html替代此目录下的html(如果有的话)返回
-            contentBase: path.resolve(rootDir, '/'),
+            contentBase: path.join(__dirname, '../'),
             // dev-server编译的静态文件不会生成在硬盘中而是在缓存中，默认是localhost的根目录
             // 如果想要控制编译后的静态文件的输出的访问路径，需要手动配置
             // 注意：如果webpack配置中使用了HtmlWebpackPlugin插件，html文件也是编译出来的，和所有静态文件放在一起，
             //       页面访问路径就变成了localhost:port/publicPath
             publicPath: '/',
             hot: true,
-            host: 'localhost'
+            host: 'localhost',
+            overlay: true,
+            before(app, ctx) {
+                app.use(hotMiddleware)
+                ctx.middleware.waitUntilValid(() => {
+                    resolve()
+                })
+            }
         })
 
-        server.listen(9555, 'localhost', () => {
-            resolve()
-        });
+        server.listen(9555, 'localhost');
 
     })
 
