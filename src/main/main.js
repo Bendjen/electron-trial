@@ -1,6 +1,5 @@
 import { BrowserWindow, globalShortcut, Menu, app, ipcMain } from 'electron'
 import { autoUpdater } from "electron-updater"
-
 const url = require('url')
 const path = require('path')
 
@@ -23,6 +22,7 @@ function createWindow() {
         // 坑点: electron5.0 以后修改了nodeIntegration的默认值，使得不开启此项elctron renderer不具备node的环境只有web的环境
         //       这就导致了renderer在使用webpack编译的时候如果target设置为'electron-renderer'，就会报错require is not defined
         webPreferences: {
+            webSecurity: true,
             nodeIntegration: true
         }
     })
@@ -73,6 +73,13 @@ function createWindow() {
     })
 
     // client.create(win);
+    // setInterval(() => {
+    //     win.webContents.send('message', 'hello world')
+
+    // }, 1000)
+    updateHandle()
+    autoUpdater.setFeedURL('https://raw.githubusercontent.com/Bendjen/electron-trial/master/dist/');
+    autoUpdater.checkForUpdatesAndNotify();
 }
 
 // Electron 会在初始化后并准备
@@ -114,32 +121,36 @@ function updateHandle() {
     };
     const os = require('os');
 
-    autoUpdater.setFeedURL(uploadUrl);
+    // autoUpdater.setFeedURL(uploadUrl);
     autoUpdater.on('error', function (error) {
+        sendUpdateMessage(error)
         sendUpdateMessage(message.error)
     });
     autoUpdater.on('checking-for-update', function () {
         sendUpdateMessage(message.checking)
     });
+
     autoUpdater.on('update-available', function (info) {
-        sendUpdateMessage(message.updateAva)
+        sendUpdateMessage(info)
     });
+
     autoUpdater.on('update-not-available', function (info) {
         sendUpdateMessage(message.updateNotAva)
     });
 
     // 更新下载进度事件
     autoUpdater.on('download-progress', function (progressObj) {
-        mainWindow.webContents.send('downloadProgress', progressObj)
+        sendUpdateMessage(progressObj)
     })
     autoUpdater.on('update-downloaded', function (event, releaseNotes, releaseName, releaseDate, updateUrl, quitAndUpdate) {
-
-        ipcMain.on('isUpdateNow', (e, arg) => {
-            console.log(arguments);
-            console.log("开始更新");
-            //some code here to handle event
-            autoUpdater.quitAndInstall();
-        });
+        sendUpdateMessage('下载成功')
+        autoUpdater.quitAndInstall();
+        // ipcMain.on('isUpdateNow', (e, arg) => {
+        //     console.log(arguments);
+        //     console.log("开始更新");
+        //     //some code here to handle event
+        //     autoUpdater.quitAndInstall();
+        // });
 
         mainWindow.webContents.send('isUpdateNow')
     });
@@ -152,5 +163,6 @@ function updateHandle() {
 
 // 通过main进程发送事件给renderer进程，提示更新信息
 function sendUpdateMessage(text) {
-    mainWindow.webContents.send('message', text)
+    console.log(text)
+    win.webContents.send('message', text)
 }

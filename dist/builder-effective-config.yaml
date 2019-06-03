@@ -1,7 +1,7 @@
 directories:
   output: dist
   buildResources: build
-productName: electron-app
+productName: 云票务正式版
 appId: bendjen.1.0
 files:
   - filter:
@@ -26,8 +26,7 @@ nsis:
   installerHeaderIcon: ./icons/installerIcon.ico
   createDesktopShortcut: true
   createStartMenuShortcut: true
-  shortcutName: electron-app
 publish:
   - provider: github
-    url: 'https://raw.githubusercontent.com/'
+    url: 'https://raw.githubusercontent.com/Bendjen/electron-trial/master/dist/'
 electronVersion: 5.0.1

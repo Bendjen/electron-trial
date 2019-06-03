@@ -1,6 +1,6 @@
 {
-  "name": "electron-app",
-  "version": "1.0.1",
+  "name": "electron-trial",
+  "version": "1.0.0",
   "description": "",
   "main": "app/main/main.js",
   "scripts": {
@@ -9,9 +9,9 @@
     "pack": "cross-env NODE_ENV=production node ./scripts/dist.js && electron-builder"
   },
   "build": {
-    "productName": "electron-app",
+    "productName": "云票务正式版",
     "appId": "bendjen.1.0",
-    "directories": {
+    "directories": {  
       "output": "dist"
     },
     "files": [
@@ -43,13 +43,12 @@
       "uninstallerIcon": "./icons/uninstallerIcon.ico",
       "installerHeaderIcon": "./icons/installerIcon.ico",
       "createDesktopShortcut": true,
-      "createStartMenuShortcut": true,
-      "shortcutName": "electron-app"
+      "createStartMenuShortcut": true
     },
     "publish": [
       {
         "provider": "github",
-        "url": "https://raw.githubusercontent.com/"
+        "url": "https://raw.githubusercontent.com/Bendjen/electron-trial/master/dist/"
       }
     ]
   },
