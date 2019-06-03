@@ -1,0 +1,5 @@
+owner: Bendjen
+repo: electron-trial
+provider: github
+url: 'https://raw.githubusercontent.com/'
+updaterCacheDirName: electron-app-updater

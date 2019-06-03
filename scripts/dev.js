@@ -1,13 +1,11 @@
 const path = require("path");
 const webpack = require('webpack');
 const webpackDevServer = require('webpack-dev-server');
-const webpackHotMiddleware = require('webpack-hot-middleware')
 const child_process = require('child_process')
 const electron = require('electron')
 const chalk = require('chalk')
 const mainWebpackConfig = require('../config/webpack.main')
 const rendererWebpackConfig = require('../config/webpack.renderer')
-const rootDir = path.resolve(__dirname, "../");
 
 let electronProcess
 let mainCompiledRestart = false
@@ -59,29 +57,6 @@ function devRenderer() {
     return new Promise((resolve, reject) => {
         console.log(chalk.blue.bold('START COMPLITING RENDERER PROCESS...'))
         const compiler = webpack(rendererWebpackConfig);
-        const hotMiddleware = webpackHotMiddleware(compiler, {
-            log: false,
-            heartbeat: 2500
-        })
-
-        // force page reload when html-webpack-plugin template changes
-        // compiler.plugin('compilation', compilation => {
-        //     compilation.plugin('html-webpack-plugin-after-emit', (data, cb) => {
-        //         console.log(88888888888)
-        //         console.log(88888888888)
-        //         console.log(88888888888)
-        //         console.log(88888888888)
-        //         hotMiddleware.publish({ action: 'reload' })
-        //         cb()
-        //     })
-        // })
-        // compiler.hooks.compilation.tap('RendererCompliting', (compilation) => {
-        //     compilation.hooks.afterOptimizeAssets.tap('FinishRendererComplites', () => {
-        //         console.log(chalk.blue.bold('RENDERER PROCESS COMPLITED'))
-        //         hotMiddleware.publish({ action: 'reload' })
-        //         resolve()
-        //     })
-        // })
 
         // devServer会自动刷新页面在webpackConfig的target为web的情况下，当target为electron-renderer时需要用webpack-hot-middleware实现
 
@@ -97,8 +72,13 @@ function devRenderer() {
             hot: true,
             host: 'localhost',
             overlay: true,
+            proxy: {
+                '/api': {
+                    target: 'http://api.test.com',
+                    changeOrigin: true
+                }
+            },
             before(app, ctx) {
-                app.use(hotMiddleware)
                 ctx.middleware.waitUntilValid(() => {
                     resolve()
                 })

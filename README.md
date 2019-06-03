@@ -5,18 +5,20 @@
 
 ## 2.electron的目录结构，有几个package.json
 
-electron-vue实现了单package.json的目录结构，还没研究明白怎么做到的，先用双package.json结构
+1.使用vue或react脚手架来编译renderer的可以用并行scripts命令启动，这样会是双package.json的架构
+2.通过node脚本自行编译main和renderer可以只需要一个package.json
 
 ## 3.如何一个命令完成renderer的编译和elctron.
 
-通过npm-run-all包进行队列或者并行任务
-yarn start : 并行运行renderer进程的dev和main进程的dev（在渲染进程完成后需要用ctrl+R进行刷新）
-yarn dist : 队列执行renderer进程的打包和electron-app的打包
-yarn dist:dir : 同yarn dist，但是是打包免安装版
+1.通过npm-run-all包进行队列或者并行任务
+2.通过编写node脚本
 
 ## 4.本地开发环境请求接口的代理
+使用webpack-dev-server的proxy配置
+https://github.com/funnycoderstar/blog/issues/42
 
 ## 5.打包时如何混入请求接口的环境
+通过编译命令传入变量，electron-renderer环境是可以识别node的环境变量的
 
 ## 6.electron-app的自动更新
 

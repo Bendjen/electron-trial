@@ -1,0 +1,33 @@
+directories:
+  output: dist
+  buildResources: build
+productName: electron-app
+appId: bendjen.1.0
+files:
+  - filter:
+      - app
+      - extensions
+mac:
+  icon: icons/512x512.png
+win:
+  icon: icons/512x512.png
+  target:
+    - target: nsis
+      arch:
+        - x64
+linux:
+  icon: build/512x512.png
+nsis:
+  oneClick: false
+  allowElevation: true
+  allowToChangeInstallationDirectory: true
+  installerIcon: ./icons/installerIcon.ico
+  uninstallerIcon: ./icons/uninstallerIcon.ico
+  installerHeaderIcon: ./icons/installerIcon.ico
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: electron-app
+publish:
+  - provider: github
+    url: 'https://raw.githubusercontent.com/'
+electronVersion: 5.0.1
