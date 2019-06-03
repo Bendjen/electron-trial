@@ -1,8 +1,8 @@
 version: 1.0.1
 files:
-  - url: electron-app setup 1.0.1.exe
+  - url: electron-app Setup 1.0.1.exe
     sha512: gK7c4NqAvZL8o8mipOTOa63EIppVPMEEiRTbAwqAv/5UArcqDIlP6h9wbPDlGdihK93rtQvywr3V6N4zdOLaPA==
     size: 56490806
-path: electron-app setup 1.0.1.exe
+path: electron-app Setup 1.0.1.exe
 sha512: gK7c4NqAvZL8o8mipOTOa63EIppVPMEEiRTbAwqAv/5UArcqDIlP6h9wbPDlGdihK93rtQvywr3V6N4zdOLaPA==
 releaseDate: '2019-06-03T06:42:42.002Z'
