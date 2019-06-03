@@ -11,7 +11,7 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <Button type="primary">Primary</Button>
         <p>
-          ssss <code>src/App.js</code> and save to reload.
+          ss <code>src/App.js</code> and save to reload.
         </p>
         <a
           className="App-link"

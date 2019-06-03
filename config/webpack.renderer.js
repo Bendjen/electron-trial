@@ -56,8 +56,8 @@ module.exports = {
       "@": path.join(__dirname, '../src/renderer/')
     }
   },
-  // electron的renderer环境不只是单纯的浏览器环境，因为electron的renderer里面是可以调用node的功能
-  // electron5.0版本窗口的默认node能力是关闭的需要手动打开 webPreferences.nodeIntegration
+
+  // webpack-dev-server 3.5.1以前的版本把target设置为electron-renderer不能自动刷新，3.5.1修复了
   target: 'electron-renderer'
 }
 
