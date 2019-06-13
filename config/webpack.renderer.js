@@ -41,6 +41,7 @@ module.exports = {
       },
       {
         test: /\.css|scss$/,
+        exclude: "/node_modules/",
         use: [
           ifDevMode ? "style-loader" : MiniCssExtractPlugin.loader,
           // MiniCssExtractPlugin.loader,

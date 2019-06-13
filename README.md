@@ -21,6 +21,12 @@ https://github.com/funnycoderstar/blog/issues/42
 通过编译命令传入变量，electron-renderer环境是可以识别node的环境变量的
 
 ## 6.electron-app的自动更新
+采用electron-updater
+1.publish中配置服务器地址，这里采用的是github，地址如https://raw.githubusercontent.com/Bendjen/electron-trial/master/dist/
+2.app.reday中
+      autoUpdater.setFeedURL('https://raw.githubusercontent.com/Bendjen/electron-trial/master/dist/');
+      autoUpdater.checkForUpdatesAndNotify();
+3.应用使用electron-builder打包，生成的latest.yml中的文件名要与安装包的文件名对应
 
 ## 7.chrome开发工具扩展
 

@@ -1,0 +1,46 @@
+.homeContainer {
+  background: #2f3242;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  .App-logo {
+    animation: App-logo-spin infinite 10s linear;
+    width: 200px;
+    height: 200px;
+    pointer-events: none;
+  }
+
+  .Title-logo {
+    color: #fff;
+    font: normal 22px/1.25 "Segoe UI Light", "Segoe UI", "Microsoft Jhenghei",
+      "Microsoft Yahei", arial, sans-serif;
+    font-size: 60px;
+    height: 200px;
+    line-height: 200px;
+    margin-left: 38px;
+  }
+  .version{
+    color: #fff;
+    font: normal 22px/1.25 "Segoe UI Light", "Segoe UI", "Microsoft Jhenghei",
+    "Microsoft Yahei", arial, sans-serif;
+    height: 200px;
+    line-height: 240px;
+    padding-left:20px;
+  }
+  p {
+    color: #e5e5e5;
+    font: normal 22px/1.25 "Segoe UI Light", "Segoe UI", "Microsoft Jhenghei",
+      "Microsoft Yahei", arial, sans-serif;
+  }
+
+  @keyframes App-logo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}

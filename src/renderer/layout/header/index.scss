@@ -1,0 +1,32 @@
+.header {
+  position: fixed;
+  top: 0;
+  background: #fff;
+  border-bottom: 1px solid #e5e5e5;
+  height: 78px;
+  width: 100%;
+  z-index: 100;
+  .container {
+    width:100%;
+    margin: 0 auto;
+    padding:0 40px;
+    .logo {
+      font-size: 26px;
+      color: #2c3e50;
+      font-family: "Dosis", "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+      font-weight: 500;
+      display: inline-block;
+      margin-left: 10px;
+      user-select: none;
+    }
+    .iconfont {
+      color: #c6a76d;
+      font-size: 45px;
+    }
+    .icon {
+      cursor: pointer;
+      text-decoration: none;
+    }
+  }
+}
+

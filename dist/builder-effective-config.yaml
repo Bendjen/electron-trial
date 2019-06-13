@@ -1,7 +1,7 @@
 directories:
   output: dist
   buildResources: build
-productName: 云票务正式版
+productName: electron-app
 appId: bendjen.1.0
 files:
   - filter:

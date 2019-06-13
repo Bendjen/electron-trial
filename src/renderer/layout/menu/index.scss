@@ -1,0 +1,15 @@
+.menu {
+  position: fixed;
+  left: 0;
+  height: 100%;
+  background: #fff;
+  padding-top: 78px;
+  overflow-y: auto;
+  overflow-x: hidden; 
+  border-right: 1px solid #e5e5e5;
+}
+.ant-menu-inline,
+.ant-menu-vertical,
+.ant-menu-vertical-left {
+  border-right: none !important;
+}

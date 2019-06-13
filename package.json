@@ -1,17 +1,17 @@
 {
-  "name": "electron-trial",
+  "name": "electron-app",
   "version": "1.0.0",
   "description": "",
   "main": "app/main/main.js",
   "scripts": {
     "start": "cross-env NODE_ENV=development node ./scripts/dev.js",
-    "dist": "cross-env NODE_ENV=production node ./scripts/dist.js && electron-builder --dir",
-    "pack": "cross-env NODE_ENV=production node ./scripts/dist.js && electron-builder"
+    "dist": "cross-env NODE_ENV=production node ./scripts/prod.js && electron-builder --dir",
+    "pack": "cross-env NODE_ENV=production node ./scripts/prod.js && electron-builder"
   },
   "build": {
-    "productName": "云票务正式版",
+    "productName": "electron-app",
     "appId": "bendjen.1.0",
-    "directories": {  
+    "directories": {
       "output": "dist"
     },
     "files": [
@@ -84,7 +84,9 @@
     "antd": "^3.19.1",
     "axios": "^0.19.0",
     "electron-updater": "^4.0.6",
+    "flex.css": "^1.1.7",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "react-router-dom": "^5.0.1"
   }
 }
