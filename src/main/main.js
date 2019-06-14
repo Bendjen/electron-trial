@@ -5,6 +5,8 @@ const path = require('path')
 
 // const client = require('electron-connect').client;
 
+let packageJson = require("../../package.json");
+global.version = packageJson.version;
 let win
 
 function isDev() {
@@ -17,8 +19,8 @@ console.log(`NODE_ENV=${process.env['NODE_ENV']}`)
 function createWindow() {
     // 创建浏览器窗口
     win = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 1200,
+        height: 900,
         // 坑点: electron5.0 以后修改了nodeIntegration的默认值，使得不开启此项elctron renderer不具备node的环境只有web的环境
         //       这就导致了renderer在使用webpack编译的时候如果target设置为'electron-renderer'，就会报错require is not defined
         webPreferences: {
@@ -80,6 +82,47 @@ function createWindow() {
     updateHandle()
     autoUpdater.setFeedURL('https://raw.githubusercontent.com/Bendjen/electron-trial/master/dist/');
     autoUpdater.checkForUpdatesAndNotify();
+
+
+    // 通信
+
+    ipcMain.on('CHECK-UPDATE', (sys, message) => {
+        win.webContents.send('CHECK-UPDATE', {
+            status: 'success',
+            data: {
+                status: 1,
+                version: 'v1.1.0',
+                releaseNote: '交互体验优化'
+            }
+        })
+    })
+    let time = 0;
+    ipcMain.on('CHECK-AVAILABLE', (sys, message) => {
+        win.webContents.send('CHECK-AVAILABLE', {
+            status: 'success',
+            data: {
+                available: time == 0 ? false : true,
+                downloading: time == 0 ? true : false,
+                version: 'v1.1.0',
+            }
+        })
+
+        if (time == 0) {
+            let total = 0;
+            const progressInterval = setInterval(() => {
+                const progress = Math.floor(total += 10)
+                win.webContents.send('DOWNLOAD-PROGRESS', progress)
+                if (total >= 100) {
+                    clearInterval(progressInterval)
+                }
+            }, 500)
+        }
+        time += 1
+
+    })
+
+
+
 }
 
 // Electron 会在初始化后并准备

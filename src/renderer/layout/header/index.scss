@@ -7,13 +7,14 @@
   width: 100%;
   z-index: 100;
   .container {
-    width:100%;
+    width: 100%;
     margin: 0 auto;
-    padding:0 40px;
+    padding: 0 40px;
     .logo {
       font-size: 26px;
       color: #2c3e50;
-      font-family: "Dosis", "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+      font-family: "Dosis", "Source Sans Pro", "Helvetica Neue", Arial,
+        sans-serif;
       font-weight: 500;
       display: inline-block;
       margin-left: 10px;
@@ -29,4 +30,53 @@
     }
   }
 }
+.menuIcon {
+  cursor: pointer;
+  font-size: 20px;
+  padding: 0 15px;
+  &:hover {
+    color: #1890ff;
+  }
+}
+.menuIconDownloading,
+.menuIconAvailable,
+.menuIconExist {
+  color: #1890ff;
+}
 
+.headerModal {
+  .logo {
+    font-size: 26px;
+    color: #2c3e50;
+    font-family: "Dosis", "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 500;
+    display: inline-block;
+    margin-left: 10px;
+    user-select: none;
+  }
+  .iconfont {
+    color: #c6a76d;
+    font-size: 45px;
+  }
+  p {
+    i {
+      font-size: 26px;
+    }
+    span {
+      padding-left: 10px;
+      font-size: 20px;
+    }
+  }
+}
+
+.Title-logo {
+  font: normal 22px/1.25 "Segoe UI Light", "Segoe UI", "Microsoft Jhenghei",
+    "Microsoft Yahei", arial, sans-serif;
+  font-size: 40px;
+}
+.version {
+  font: normal 22px/1.25 "Segoe UI Light", "Segoe UI", "Microsoft Jhenghei",
+    "Microsoft Yahei", arial, sans-serif;
+  padding-left: 20px;
+  line-height: 3;
+}

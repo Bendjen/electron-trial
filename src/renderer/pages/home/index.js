@@ -1,17 +1,17 @@
 import React from "react";
 import "./index.scss";
+const { remote } = require('electron');
 class Home extends React.Component {
   constructor(props) {
     super(props);
   }
   render() {
-    console.log(process.versions)
     return (
       <div className='homeContainer' data-flex='dir:top main:center corss:center'>
         <div data-flex='main:center corss:center'>
           <img className='App-logo' src='../../../../public/assets/electron-logo.png'></img>
-          <h1 className='Title-logo'>ELECTRON</h1>
-          <span className='version'>v1.0.0</span>
+          <h1 className='Title-logo'>ELECTRON-TRIAL</h1>
+          <span className='version'>v{remote.getGlobal('version')}</span>
         </div>
           <p  data-flex='main:center corss:center'>
             <span>Electron：</span>
