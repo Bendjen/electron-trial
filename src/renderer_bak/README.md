@@ -1,2 +1,0 @@
-1. renderer进程下的.env文件
-renderer进行编译的时候，可能因为renderer的依赖与主项目app的依赖版本不同或其他原因引起冲突，通过.env跳过

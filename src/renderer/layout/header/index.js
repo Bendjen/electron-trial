@@ -57,7 +57,7 @@ class Header extends React.Component {
               <Link
                 data-flex="cross:center"
                 className='icon'
-                to="/about"
+                to="/"
               >
                 <i className="iconfont icon-kafeidou" />
                 <span className='logo'>Bendjen</span>

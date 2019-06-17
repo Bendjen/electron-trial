@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>New Window</title>
+  <style>
+  
+    body {
+      background: rgba(0, 0, 0, 0.8);
+    }
+
+    p {
+      font: normal 22px/1.25 "Segoe UI Light", "Segoe UI", "Microsoft Jhenghei",
+        "Microsoft Yahei", arial, sans-serif;
+      color: #fff;
+      font-size: 40px;
+    }
+    
+    .title{
+      text-align: center;
+      height: 360px;
+      line-height: 360px;
+      font-size: 50px;
+    }
+  </style>
+</head>
+
+<body>
+    <p class='title'>The New Window</p>
+</body>
+
+<script>
+  const { ipcRenderer } = require('electron');
+  document.getElementById('close').addEventListener('click', () => {
+    ipcRenderer.send('CLOSE-WINDOW', 'default')
+  })
+</script>
+
+</html>

@@ -1,5 +1,7 @@
-import { BrowserWindow, globalShortcut, Menu, app, ipcMain } from 'electron'
+import { BrowserWindow, globalShortcut, Menu, app, ipcMain, remote } from 'electron'
 import { autoUpdater } from "electron-updater"
+import newWindow from "./modules/winodw"
+
 const url = require('url')
 const path = require('path')
 
@@ -7,7 +9,7 @@ const path = require('path')
 
 let packageJson = require("../../package.json");
 global.version = packageJson.version;
-let win
+let mainWindow, demoWindow
 
 function isDev() {
     return process.env['NODE_ENV'] === 'development'
@@ -18,15 +20,20 @@ console.log(`NODE_ENV=${process.env['NODE_ENV']}`)
 
 function createWindow() {
     // 创建浏览器窗口
-    win = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         width: 1200,
         height: 900,
+        show: false,
         // 坑点: electron5.0 以后修改了nodeIntegration的默认值，使得不开启此项elctron renderer不具备node的环境只有web的环境
         //       这就导致了renderer在使用webpack编译的时候如果target设置为'electron-renderer'，就会报错require is not defined
         webPreferences: {
             webSecurity: true,
             nodeIntegration: true
         }
+    })
+
+    mainWindow.once('ready-to-show', () => {
+        mainWindow.show()
     })
 
     // 创建菜单
@@ -36,11 +43,10 @@ function createWindow() {
     // 然后加载应用的 index.html。
     if (isDev()) {
         // 这里的url换成你所使用框架开发时的url
-        win.loadURL('http://localhost:9555');
+        mainWindow.loadURL('http://localhost:9555');
     } else {
-        win.loadURL(url.format({
+        mainWindow.loadURL(url.format({
             pathname: path.join(__dirname, '../../app/renderer/index.html'),
-            // pathname: path.join(__dirname, '../../app/renderer/index.html'),
             protocol: 'file:',
             slashes: true
         }))
@@ -56,27 +62,27 @@ function createWindow() {
     // 监听快捷键
     // 刷新
     globalShortcut.register('Ctrl+R', () => {
-        win.reload()
+        mainWindow.reload()
     })
 
     // 切换开发者工具
     globalShortcut.register('Ctrl+F12', () => {
-        win.webContents.toggleDevTools()
+        mainWindow.webContents.toggleDevTools()
     })
 
 
 
     // 当 window 被关闭，这个事件会被触发。
-    win.on('closed', () => {
+    mainWindow.on('closed', () => {
         // 取消引用 window 对象，如果你的应用支持多窗口的话，
         // 通常会把多个 window 对象存放在一个数组里面，
         // 与此同时，你应该删除相应的元素。
-        win = null
+        mainWindow = null
     })
 
-    // client.create(win);
+    // client.create(mainWindow);
     // setInterval(() => {
-    //     win.webContents.send('message', 'hello world')
+    //     mainWindow.webContents.send('message', 'hello world')
 
     // }, 1000)
     updateHandle()
@@ -84,10 +90,17 @@ function createWindow() {
     autoUpdater.checkForUpdatesAndNotify();
 
 
-    // 通信
+    ipcMain.on('NEW-WINDOW', (sys, config) => {
+        demoWindow = newWindow(config)
+    })
 
+    ipcMain.on('CLOSE-WINDOW', (sys, key) => {
+        demoWindow.close()
+    })
+
+    // 通信
     ipcMain.on('CHECK-UPDATE', (sys, message) => {
-        win.webContents.send('CHECK-UPDATE', {
+        mainWindow.webContents.send('CHECK-UPDATE', {
             status: 'success',
             data: {
                 status: 1,
@@ -98,7 +111,7 @@ function createWindow() {
     })
     let time = 0;
     ipcMain.on('CHECK-AVAILABLE', (sys, message) => {
-        win.webContents.send('CHECK-AVAILABLE', {
+        mainWindow.webContents.send('CHECK-AVAILABLE', {
             status: 'success',
             data: {
                 available: time == 0 ? false : true,
@@ -111,7 +124,7 @@ function createWindow() {
             let total = 0;
             const progressInterval = setInterval(() => {
                 const progress = Math.floor(total += 10)
-                win.webContents.send('DOWNLOAD-PROGRESS', progress)
+                mainWindow.webContents.send('DOWNLOAD-PROGRESS', progress)
                 if (total >= 100) {
                     clearInterval(progressInterval)
                 }
@@ -148,7 +161,7 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
     // 在macOS上，当单击dock图标并且没有其他窗口打开时，
     // 通常在应用程序中重新创建一个窗口。
-    if (win === null) {
+    if (mainWindow === null) {
         createWindow()
     }
 })
@@ -207,5 +220,5 @@ function updateHandle() {
 // 通过main进程发送事件给renderer进程，提示更新信息
 function sendUpdateMessage(text) {
     console.log(text)
-    win.webContents.send('message', text)
+    mainWindow.webContents.send('message', text)
 }

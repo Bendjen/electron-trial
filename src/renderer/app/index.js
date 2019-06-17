@@ -2,9 +2,10 @@
 import React from 'react';
 import './index.css';
 import { Button, notification } from 'antd';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { HashRouter as Router, Route, Swicth } from "react-router-dom";
 import { Body, Header, Menu } from "../layout/index";
 import Home from "../pages/home"
+import Window from "../pages/window"
 import { CheckUpdate, CheckAvailable } from "../remote"
 const { ipcRenderer, remote } = require('electron');
 
@@ -133,7 +134,12 @@ class App extends React.Component {
     const { existNewVersion, downloading, available, newVersion, version, progress } = this.state
     const Main = () => (
       <Body>
-        <Route exact={true} path="/" component={Home} />
+        {/* <Swicth> */}
+          <Route exact={true} path="/" component={Home} />
+          <Route exact={true} path="/home" component={Home} />
+          <Route exact={true} path="/window" component={Window} />
+        {/* </Swicth> */}
+
       </Body>
     );
     return (
