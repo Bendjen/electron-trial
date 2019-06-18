@@ -3,7 +3,7 @@ import "./index.scss";
 import { Alert, Icon, Button } from 'antd';
 const { ipcRenderer } = require('electron');
 
-class Home extends React.Component {
+class Window extends React.Component {
   constructor(props) {
     super(props);
     console.log(process)
@@ -82,4 +82,4 @@ class Home extends React.Component {
   }
 }
 
-export default Home;
+export default Window;

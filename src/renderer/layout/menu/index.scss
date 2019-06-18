@@ -1,16 +1,48 @@
-.menu {
+.menuContainer {
   position: fixed;
   left: 0;
   height: 100%;
-  background: #fff;
-  padding-top: 78px;
+  background: #2f3242;
+  // padding-top: 78px;
   overflow-y: auto;
-  overflow-x: hidden; 
+  overflow-x: hidden;
   border-right: 1px solid #e5e5e5;
-  z-index:99;
+  z-index: 101;
+  .Title-logo {
+    font: normal 22px/1 "Segoe UI Light", "Segoe UI", "Microsoft Jhenghei",
+      "Microsoft Yahei", arial, sans-serif;
+    font-size: 30px;
+    color: #fff;
+  }
+  .Header-logo {
+    padding: 20px 0;
+    padding-left: 30px;
+    .logo {
+      font-size: 26px;
+      color: #fff;
+      font-family: "Dosis", "Source Sans Pro", "Helvetica Neue", Arial,
+        sans-serif;
+      font-weight: 500;
+      display: inline-block;
+      margin-left: 10px;
+      user-select: none;
+    }
+    .iconfont {
+      color: #c6a76d;
+      font-size: 45px;
+    }
+    .icon {
+      cursor: pointer;
+      text-decoration: none;
+    }
+  }
 }
 .ant-menu-inline,
 .ant-menu-vertical,
 .ant-menu-vertical-left {
   border-right: none !important;
+}
+.ant-menu-dark,
+.ant-menu-dark .ant-menu-sub {
+  background: #2f3242 !important;
 }

@@ -11,24 +11,39 @@ class MenuBar extends React.Component {
   }
   render() {
     return (
-      <div className='menu'>
+      <div className='menuContainer'>
+        <div className='Header-logo' data-flex='cross:center'>
+          <i className="iconfont icon-kafeidou" />
+          <span className='logo'>Bendjen</span>
+        </div>
         <Menu
           style={{ width: 256 }}
-          defaultSelectedKeys={['1']}
-          defaultOpenKeys={['sub1']}
+          theme="dark"
           mode="inline"
         >
-          <Menu.Item key="1">
-            <Link to='/home'>主页</Link>
+          <Menu.Item key="home">
+            <Link to='/home'>
+              <Icon type="home" />
+              <span>主页</span>
+            </Link>
           </Menu.Item>
-          <Menu.Item key="2">
-            <Link to='window'>窗口</Link>
+          <Menu.Item key="window">
+            <Link to='window'>
+              <Icon type="layout" />
+              <span>窗口</span>
+            </Link>
           </Menu.Item>
-          <Menu.Item key="3">
-            <Link to='/'>通知</Link>
+          <Menu.Item key="dialog">
+            <Link to='/dialog'>
+              <Icon type="bell" />
+              <span>对话框</span>
+            </Link>
           </Menu.Item>
-          <Menu.Item key="4">
-            <Link to='/'>通信</Link>
+          <Menu.Item key="communication">
+            <Link to='/communication'>
+              <Icon type="message" />
+              <span>进程间通信</span>
+            </Link>
           </Menu.Item>
         </Menu>
       </div>

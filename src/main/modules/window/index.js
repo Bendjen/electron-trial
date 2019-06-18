@@ -1,8 +1,23 @@
 import { BrowserWindow, ipcMain } from 'electron'
 const url = require('url')
 const path = require('path')
+let demoWindow;
 
-export default function (config = {}) {
+export default {
+  init: () => {
+    ipcMain.on('NEW-WINDOW', (sys, config) => {
+      demoWindow = newWindow(config)
+    })
+
+    ipcMain.on('CLOSE-WINDOW', (sys, key) => {
+      demoWindow.close()
+    })
+  },
+  newWindow: newWindow
+}
+
+
+function newWindow(config = {}) {
   const defaultConfig = {
     width: 800,
     height: 600,

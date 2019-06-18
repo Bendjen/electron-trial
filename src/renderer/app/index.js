@@ -2,12 +2,15 @@
 import React from 'react';
 import './index.css';
 import { Button, notification } from 'antd';
-import { HashRouter as Router, Route, Swicth } from "react-router-dom";
+import { HashRouter as Router, Route } from "react-router-dom";
 import { Body, Header, Menu } from "../layout/index";
+import { CheckUpdate, CheckAvailable } from "../api"
+const { ipcRenderer, remote } = require('electron');
+
 import Home from "../pages/home"
 import Window from "../pages/window"
-import { CheckUpdate, CheckAvailable } from "../remote"
-const { ipcRenderer, remote } = require('electron');
+import Dialog from "../pages/dialog"
+import Communication from "../pages/Communication"
 
 
 class App extends React.Component {
@@ -24,7 +27,7 @@ class App extends React.Component {
   }
   componentDidMount() {
     this.downloadProgressListen()
-    this.checkUpdate()
+    // this.checkUpdate()
   }
 
 
@@ -138,6 +141,8 @@ class App extends React.Component {
           <Route exact={true} path="/" component={Home} />
           <Route exact={true} path="/home" component={Home} />
           <Route exact={true} path="/window" component={Window} />
+          <Route exact={true} path="/dialog" component={Dialog} />
+          <Route exact={true} path="/communication" component={Communication} />
         {/* </Swicth> */}
 
       </Body>

@@ -7,7 +7,6 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>New Window</title>
   <style>
-  
     body {
       background: rgba(0, 0, 0, 0.8);
     }
@@ -18,8 +17,8 @@
       color: #fff;
       font-size: 40px;
     }
-    
-    .title{
+
+    .title {
       text-align: center;
       height: 360px;
       line-height: 360px;
@@ -29,13 +28,16 @@
 </head>
 
 <body>
-    <p class='title'>The New Window</p>
+  <p class='title'>The New Window</p>
 </body>
 
 <script>
   const { ipcRenderer } = require('electron');
   document.getElementById('close').addEventListener('click', () => {
     ipcRenderer.send('CLOSE-WINDOW', 'default')
+    ipcRenderer.on('RENDERER-TO-RENDERER', (sys, message) => {
+      alert(message)
+    })
   })
 </script>
 
