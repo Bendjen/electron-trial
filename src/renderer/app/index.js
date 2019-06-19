@@ -10,6 +10,7 @@ const { ipcRenderer, remote } = require('electron');
 import Home from "../pages/home"
 import Window from "../pages/window"
 import Dialog from "../pages/dialog"
+import DataSharing from "../pages/dataSharing"
 import Communication from "../pages/Communication"
 
 
@@ -143,6 +144,7 @@ class App extends React.Component {
           <Route exact={true} path="/window" component={Window} />
           <Route exact={true} path="/dialog" component={Dialog} />
           <Route exact={true} path="/communication" component={Communication} />
+          <Route exact={true} path="/dataSharing" component={DataSharing} />
         {/* </Swicth> */}
 
       </Body>

@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Menu, Icon } from 'antd';
-const { SubMenu } = Menu;
 import "./index.scss";
 
 
@@ -43,6 +42,24 @@ class MenuBar extends React.Component {
             <Link to='/communication'>
               <Icon type="message" />
               <span>进程间通信</span>
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="dataSharing">
+            <Link to='/dataSharing'>
+              <Icon type="apartment" />
+              <span>数据共享</span>
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="dataSharing">
+            <Link to='/dataSharing'>
+              <Icon type="printer" />
+              <span>打印</span>
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="dataSharing">
+            <Link to='/dataSharing'>
+              <Icon type="gold" />
+              <span>其它</span>
             </Link>
           </Menu.Item>
         </Menu>

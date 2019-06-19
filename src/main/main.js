@@ -1,8 +1,9 @@
-import { BrowserWindow, globalShortcut, Menu, app, ipcMain, dialog } from 'electron'
+import { BrowserWindow, globalShortcut, Menu, app } from 'electron'
 
 import windowMaker from "./modules/window"
 import updater from "./modules/updater"
 import communication from "./modules/communication"
+import dataSharing from "./modules/dataSharing"
 
 const url = require('url')
 const path = require('path')
@@ -11,6 +12,7 @@ const path = require('path')
 
 let packageJson = require("../../package.json");
 global.version = packageJson.version;
+
 let mainWindow
 
 function isDev() {
@@ -83,6 +85,7 @@ function createWindow() {
     })
 
     updater.init(mainWindow)
+    dataSharing.init(mainWindow)
     communication.init(mainWindow)
     windowMaker.init()
    

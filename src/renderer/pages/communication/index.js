@@ -50,7 +50,7 @@ class Communication extends React.Component {
         <div className='line'>
           <h1># 渲染进程向主进程通信</h1>
           <p>在渲染进程使用ipcRenderer.send()进行发送后，在主进程使用ipcMain.on()进行监听。</p>
-          <div className='sendBar'>
+          <div className='sendBar' data-flex='cross:center'>
             <Input size='large' onChange={e => this.handleChange.bind(this, e, 'renderer2main')()} value={renderer2main} style={{ width: 360, marginRight: 60 }} placeholder="请输入要向主进程发送的信息" />
             <Button type="primary" onClick={this.handleSend.bind(this, 'RENDERER-TO-MAIN', 'renderer2main')}>发送</Button>
           </div>
@@ -58,7 +58,7 @@ class Communication extends React.Component {
         <div className='line'>
           <h1># 主进程进程向渲染通信</h1>
           <p>在主进程使用mainWindow.webContents.send()进行发送后，在渲染进程使用ipcRenderer.on()进行监听。</p>
-          <div className='sendBar'>
+          <div className='sendBar' data-flex='cross:center'>
             <Input size='large' onChange={e => this.handleChange.bind(this, e, 'main2renderer')()} value={main2renderer} style={{ width: 360, marginRight: 60 }} placeholder="请输入要向渲染进程发送的信息" />
             <Button type="primary" onClick={this.handleSend.bind(this, 'MAIN-TO-RENDERER', 'main2renderer')}>发送</Button>
           </div>
@@ -66,7 +66,7 @@ class Communication extends React.Component {
         <div className='line'>
           <h1># 渲染进程向渲染通信</h1>
           <p>在主进程建立中转站，然后向其他渲染进程转发。</p>
-          <div className='sendBar'>
+          <div className='sendBar' data-flex='cross:center'>
             <Input size='large' onChange={e => this.handleChange.bind(this, e, 'renderer2renderer')()} value={renderer2renderer} style={{ width: 360, marginRight: 60 }} placeholder="请输入要向渲染进程发送的信息" />
             <Button type="primary" onClick={this.handleSend.bind(this, 'RENDERER-TO-RENDERER', 'renderer2renderer')}>发送</Button>
           </div>

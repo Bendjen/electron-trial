@@ -2,8 +2,8 @@
 
 const path = require('path')
 const webpack = require('webpack')
-
-// const BabiliWebpackPlugin = require('babili-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const BabiliWebpackPlugin = require('babili-webpack-plugin')
 
 let mainConfig = {
     entry: {
@@ -43,5 +43,17 @@ let mainConfig = {
     // 默认的web目标环境中缺少electron-main下的许多node和electron全局模块
     target: 'electron-main'
 };
+
+if (process.env.NODE_ENV === 'production') {
+    mainConfig.plugins.push(
+        new BabiliWebpackPlugin(),
+        new CopyWebpackPlugin([
+            {
+                from: path.join(__dirname, '../src/main/modules/window'),
+                to: path.join(__dirname, '../app/main')
+            }
+        ]),
+    )
+}
 
 module.exports = mainConfig
