@@ -4,7 +4,7 @@ import { autoUpdater } from "electron-updater"
 export default {
   init: (mountedWindow) => {
 
-    autoUpdater.setFeedURL('https://raw.githubusercontent.com/Bendjen/electron-trial/master/dist/');
+    autoUpdater.setFeedURL('https://raw.githubusercontent.com/Bendjen/electron-trial/master/release/');
     autoUpdater.checkForUpdatesAndNotify();
 
     ipcMain.on('CHECK-UPDATE', (sys, message) => {

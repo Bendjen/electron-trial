@@ -2,11 +2,12 @@ const path = require("path");
 
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const ifDevMode = process.env.NODE_ENV !== "production";
 const rootDir = path.resolve(__dirname, "../");
 
-module.exports = {
+let rendererConfig = {
   mode: process.env.NODE_ENV,
   devtool: 'inline-source-map',
   watch: ifDevMode,
@@ -54,7 +55,7 @@ module.exports = {
   },
   resolve: {
     alias: {
-      "@": path.join(__dirname, '../src/renderer/')
+      "@": path.resolve(__dirname, '../src/renderer/')
     }
   },
 
@@ -62,3 +63,19 @@ module.exports = {
   target: 'electron-renderer'
 }
 
+if (process.env.NODE_ENV === 'production') {
+  rendererConfig.plugins.push(
+    new CopyWebpackPlugin([
+      {
+        from: path.join(__dirname, '../public/lib'),
+        to: path.join(__dirname, '../app/lib')
+      },
+      {
+        from: path.join(__dirname, '../public/assets'),
+        to: path.join(__dirname, '../app/renderer/assets')
+      },
+    ])
+  )
+}
+
+module.exports = rendererConfig

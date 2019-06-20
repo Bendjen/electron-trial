@@ -1,0 +1,18 @@
+.otherContainer{
+  background: #fff;
+  padding: 20px;
+  .line{
+    &:not(:first-child){
+      margin-top:30px; 
+    }
+    h1{
+      margin-bottom: 30px;
+    }
+    position: relative;
+    margin:20px;
+    .fix{
+      position: absolute;
+      right:20px;
+    }
+  }
+}

@@ -32,6 +32,6 @@ function newWindow(config = {}) {
     pathname: path.join(__dirname, `${config.windowKey}.html`),
     slashes: true
   }));
-  demoWindow.webContents.toggleDevTools()
+  // demoWindow.webContents.toggleDevTools()
   return demoWindow
 }

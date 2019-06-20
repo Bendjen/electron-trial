@@ -1,5 +1,5 @@
 {
-  "name": "electron-app",
+  "name": "electron-trial",
   "version": "1.0.0",
   "description": "",
   "main": "app/main/main.js",
@@ -9,7 +9,7 @@
     "pack": "cross-env NODE_ENV=production node ./scripts/prod.js && electron-builder"
   },
   "build": {
-    "productName": "electron-app",
+    "productName": "electron-trial",
     "appId": "bendjen.1.0",
     "directories": {
       "output": "dist"
@@ -48,7 +48,7 @@
     "publish": [
       {
         "provider": "github",
-        "url": "https://raw.githubusercontent.com/Bendjen/electron-trial/master/dist/"
+        "url": "https://raw.githubusercontent.com/Bendjen/electron-trial/master/release/"
       }
     ]
   },

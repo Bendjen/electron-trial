@@ -1,7 +1,7 @@
 directories:
   output: dist
   buildResources: build
-productName: electron-app
+productName: electron-trial
 appId: bendjen.1.0
 files:
   - filter:

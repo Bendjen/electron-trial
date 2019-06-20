@@ -7,7 +7,12 @@ import "./index.scss";
 class MenuBar extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      defaultSelectedKeys: [location.href.split('#/')[1] || 'home']
+    }
+
   }
+
   render() {
     return (
       <div className='menuContainer'>
@@ -16,6 +21,7 @@ class MenuBar extends React.Component {
           <span className='logo'>Bendjen</span>
         </div>
         <Menu
+          defaultSelectedKeys={this.state.defaultSelectedKeys}
           style={{ width: 256 }}
           theme="dark"
           mode="inline"
@@ -50,14 +56,14 @@ class MenuBar extends React.Component {
               <span>数据共享</span>
             </Link>
           </Menu.Item>
-          <Menu.Item key="dataSharing">
-            <Link to='/dataSharing'>
+          <Menu.Item key="printer">
+            <Link to='/printer'>
               <Icon type="printer" />
               <span>打印</span>
             </Link>
           </Menu.Item>
-          <Menu.Item key="dataSharing">
-            <Link to='/dataSharing'>
+          <Menu.Item key="other">
+            <Link to='/other'>
               <Icon type="gold" />
               <span>其它</span>
             </Link>

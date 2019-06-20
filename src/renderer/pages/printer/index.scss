@@ -1,0 +1,12 @@
+.printerContainer{
+  background: #fff;
+  padding: 20px;
+  .line{
+    position: relative;
+    margin:60px 20px;
+    button{
+      position: absolute;
+      right:20px;
+    }
+  }
+}

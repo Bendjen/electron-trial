@@ -37,10 +37,10 @@ function distRenderer() {
         compiler.run((err, stats) => {
             const info = stats.toJson();
             if (stats.hasErrors()) {
-                console.log(chalk.blue.bold('Main Process Error:') + info.errors)
+                console.log(chalk.blue.bold('RENDERER Process Error:') + info.errors)
                 reject()
             } else {
-                console.log(chalk.blue.bold('MAIN PROCESS COMPLITED'))
+                console.log(chalk.blue.bold('RENDERER PROCESS COMPLITED'))
                 resolve()
             }
         });

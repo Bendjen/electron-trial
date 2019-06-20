@@ -1,9 +1,11 @@
-import { BrowserWindow, globalShortcut, Menu, app } from 'electron'
+import { BrowserWindow, globalShortcut, Menu, app, crashReporter } from 'electron'
 
 import windowMaker from "./modules/window"
 import updater from "./modules/updater"
 import communication from "./modules/communication"
 import dataSharing from "./modules/dataSharing"
+import printer from "./modules/printer"
+import other from "./modules/other"
 
 const url = require('url')
 const path = require('path')
@@ -84,11 +86,22 @@ function createWindow() {
         mainWindow = null
     })
 
+    mainWindow.on('crashed', () => {
+        crashReporter.start({
+            productName: 'YourName',
+            companyName: 'YourCompany',
+            submitURL: 'https://your-domain.com/url-to-submit',
+            uploadToServer: false
+        })
+    })
+
     updater.init(mainWindow)
     dataSharing.init(mainWindow)
     communication.init(mainWindow)
+    printer.init(mainWindow)
     windowMaker.init()
-   
+    other.init(mainWindow,app)
+
 }
 
 

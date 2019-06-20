@@ -9,7 +9,8 @@ class Home extends React.Component {
     return (
       <div className='homeContainer' data-flex='dir:top main:center corss:center'>
         <div data-flex='main:center corss:center'>
-          <img className='App-logo' src='../../../../public/assets/electron-logo.png'></img>
+          <img className='App-logo' src='assets/electron-logo.png'></img>
+          {/* <img className='App-logo' src='../../../../public/assets/electron-logo.png'></img> */}
           <h1 className='Title-logo'>ELECTRON-TRIAL</h1>
           <span className='version'>v{remote.getGlobal('version')}</span>
         </div>

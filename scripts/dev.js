@@ -63,7 +63,7 @@ function devRenderer() {
         const server = new webpackDevServer(compiler, {
             // 启动服务后 localhost对应的目录，取该目录下的index.html作为localhost根目录对应的返回
             // 注意：如果webpack配置中使用了HtmlWebpackPlugin插件,生成的html替代此目录下的html(如果有的话)返回
-            contentBase: path.join(__dirname, '../'),
+            contentBase: path.join(__dirname, '../public'),
             // dev-server编译的静态文件不会生成在硬盘中而是在缓存中，默认是localhost的根目录
             // 如果想要控制编译后的静态文件的输出的访问路径，需要手动配置
             // 注意：如果webpack配置中使用了HtmlWebpackPlugin插件，html文件也是编译出来的，和所有静态文件放在一起，

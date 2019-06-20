@@ -1,8 +1,8 @@
-version: 1.0.0
+version: 1.1.0
 files:
-  - url: electron-app-setup-1.0.0.exe
-    sha512: /MpWyYqNnoJAUiLrlRoHslBnQguZ/+OmpkVQNj900dr7tNn5KcWB0OzUK2zAfCTf5n/OYBdiB4cpQmSHTQqHEw==
-    size: 56962845
-path: electron-app-setup-1.0.0.exe
-sha512: /MpWyYqNnoJAUiLrlRoHslBnQguZ/+OmpkVQNj900dr7tNn5KcWB0OzUK2zAfCTf5n/OYBdiB4cpQmSHTQqHEw==
-releaseDate: '2019-06-17T03:09:37.105Z'
+  - url: electron-trial-setup-1.1.0.exe
+    sha512: 4dXWUI0OLvfuiqBoEzh7TyBPuKODiqZdbwp7p2+VfdFXjIxbnPsbJkhzBORqVCo/ze9G4zuApeLbFd1qtU8skg==
+    size: 57010768
+path: electron-trial-setup-1.1.0.exe
+sha512: 4dXWUI0OLvfuiqBoEzh7TyBPuKODiqZdbwp7p2+VfdFXjIxbnPsbJkhzBORqVCo/ze9G4zuApeLbFd1qtU8skg==
+releaseDate: '2019-06-20T10:11:58.852Z'
