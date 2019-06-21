@@ -21,19 +21,37 @@ class Header extends React.Component {
 
   componentDidMount() {
     this.downloadProgressListen()
+    this.downloadProgressListen()
   }
-
 
   downloadProgressListen() {
     ipcRenderer.on('DOWNLOAD-PROGRESS', (sys, progressInfo) => {
-      console.log(progressInfo)
+      console.log(progressInfo.percent)
       this.setState({
-        progress: progressInfo.percent,
-        available: progressInfo.percent >= 100 ? true : false
+        progress: Math.floor(progressInfo.percent),
       })
-      if (value >= 100) {
-        this.emitInstall()
-      }
+    })
+  }
+  downloadedListen() {
+    const key = 'installNotification';
+    const btnInstall = (
+      <Button type="primary" key="update" style={{ marginRight: 20, marginTop: 10 }} onClick={this.emitInstall.bind(this)}>安装</Button>
+    );
+    const btnCancel = (
+      <Button style={{ marginTop: 10 }} key="cancel" onClick={() => { notification.close('installNotification') }}>取消</Button>
+    )
+    ipcRenderer.on('UPDATE-DOWNLOADED', (sys, data) => {
+      console.log('downloaded')
+      this.setState({ available: true, downloading: false })
+      notification.open({
+        message: '安装提示',
+        duration: null,
+        description:
+          `新版本 ${info.version} 已准备就绪，是否要现在安装更新？`,
+        btn: [btnInstall, btnCancel],
+        key,
+        onClose: () => { notification.close('updateNotification') },
+      });
     })
   }
 
@@ -54,29 +72,11 @@ class Header extends React.Component {
     });
   }
 
-  // 执行更新
-  emitUpdate() {
-    const key = 'installNotification';
-    const btnInstall = (
-      <Button type="primary" key="update" style={{ marginRight: 20, marginTop: 10 }} onClick={this.emitInstall.bind(this)}>安装</Button>
-    );
-    const btnCancel = (
-      <Button style={{ marginTop: 10 }} key="cancel" onClick={() => { notification.close('installNotification') }}>取消</Button>
-    )
+  // 执行下载
+  emitDownload() {
     this.setState({ available: false, downloading: true })
     notification.close('updateNotification')
-    EmitDownload().then(info => {
-      this.setState({ available: true, downloading: false })
-      notification.open({
-        message: '安装提示',
-        duration: null,
-        description:
-          `新版本 ${info.version} 已准备就绪，是否要现在安装更新？`,
-        btn: [btnInstall, btnCancel],
-        key,
-        onClose: () => { notification.close('updateNotification') },
-      });
-    }).catch(err => {
+    EmitDownload().catch(err => {
       this.setState({ available: false, downloading: false })
       notification.error({
         message: '安装提示',
@@ -89,7 +89,7 @@ class Header extends React.Component {
   checkUpdate() {
     const key = 'updateNotification';
     const btnUpdate = (
-      <Button type="primary" key="update" style={{ marginRight: 20, marginTop: 10 }} onClick={this.emitUpdate.bind(this)}>更新</Button>
+      <Button type="primary" key="update" style={{ marginRight: 20, marginTop: 10 }} onClick={this.emitDownload.bind(this)}>更新</Button>
     );
     const btnCancel = (
       <Button style={{ marginTop: 10 }} key="cancel" onClick={() => { notification.close('updateNotification') }}>取消</Button>
@@ -148,7 +148,7 @@ class Header extends React.Component {
         <Menu.Item key="exist">
           <div data-flex='cross:center'>
             <span data-flex='cross:center'> 存在新版本 <span style={{ color: '#1890FF' }}>{newVersion}</span> ，是否要更新？</span>
-            <Button type="primary" style={{ marginLeft: 15 }} size='small' onClick={this.emitUpdate.bind(this)}>更新</Button>
+            <Button type="primary" style={{ marginLeft: 15 }} size='small' onClick={this.emitDownload.bind(this)}>更新</Button>
           </div>
         </Menu.Item>
       </Menu>

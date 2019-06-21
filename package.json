@@ -45,6 +45,10 @@
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true
     },
+    "releaseInfo": {
+			"releaseName": "",
+			"releaseNotes": "版本更新测试"
+		},
     "publish": [
       {
         "provider": "github",

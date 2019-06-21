@@ -1,8 +1,10 @@
 version: 1.1.0
 files:
-  - url: electron-trial Setup 1.1.0.exe
-    sha512: w6SHQ7fIeo38pxTG9TwlDygJBo1LKst7CvKjTuBOKbYiv6BDso3l2VGoOuVCjv10vubLmJRLeBvxUmjLYO+7Zg==
-    size: 57008376
-path: electron-trial Setup 1.1.0.exe
-sha512: w6SHQ7fIeo38pxTG9TwlDygJBo1LKst7CvKjTuBOKbYiv6BDso3l2VGoOuVCjv10vubLmJRLeBvxUmjLYO+7Zg==
-releaseDate: '2019-06-21T03:26:32.720Z'
+  - url: electron-trial-setup-1.1.0.exe
+    sha512: pbKZp12xFemhdlpw4twoEgd51Ix6EZtzyETFY9xplyPN8G0Adf3PR9trK8sQ8ADZ5VkNcpHy+lGMgwF4+R0mcw==
+    size: 57007783
+path: electron-trial-setup-1.1.0.exe
+sha512: pbKZp12xFemhdlpw4twoEgd51Ix6EZtzyETFY9xplyPN8G0Adf3PR9trK8sQ8ADZ5VkNcpHy+lGMgwF4+R0mcw==
+releaseName: ''
+releaseNotes: 版本更新测试
+releaseDate: '2019-06-21T06:31:41.903Z'

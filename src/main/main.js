@@ -21,14 +21,11 @@ function isDev() {
     return process.env['NODE_ENV'] === 'development'
 }
 
-console.log(`NODE_ENV=${process.env['NODE_ENV']}`)
-
-
 function createWindow() {
     // 创建浏览器窗口
     mainWindow = new BrowserWindow({
         width: 1200,
-        height: 900,
+        height: 1000,
         show: false,
         // 坑点: electron5.0 以后修改了nodeIntegration的默认值，使得不开启此项elctron renderer不具备node的环境只有web的环境
         //       这就导致了renderer在使用webpack编译的时候如果target设置为'electron-renderer'，就会报错require is not defined

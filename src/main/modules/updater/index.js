@@ -7,7 +7,8 @@ export default {
     autoUpdater.setFeedURL('https://raw.githubusercontent.com/Bendjen/electron-trial/master/release/');
     autoUpdater.autoDownload = false;
     autoUpdater.autoInstallOnAppQuit = false;
-    autoUpdater.checkForUpdates();
+    // autoUpdater.checkForUpdates();
+    // autoUpdater.quitAndInstall();
     // autoUpdater 对象监听
 
     autoUpdater.on('error', (error) => {
