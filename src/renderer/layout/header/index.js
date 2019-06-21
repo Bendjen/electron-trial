@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Menu, Dropdown, Icon, Progress, Button, Modal, notification } from 'antd';
+import { Menu, Dropdown, Icon, Progress, Button, Modal, notification,message } from 'antd';
 import "./index.scss";
 import { CheckUpdate, EmitDownload, EmitInstall } from "../../api"
 const { ipcRenderer, remote } = require('electron');
@@ -21,7 +21,7 @@ class Header extends React.Component {
 
   componentDidMount() {
     this.downloadProgressListen()
-    this.downloadProgressListen()
+    this.downloadedListen()
   }
 
   downloadProgressListen() {
@@ -94,8 +94,10 @@ class Header extends React.Component {
     const btnCancel = (
       <Button style={{ marginTop: 10 }} key="cancel" onClick={() => { notification.close('updateNotification') }}>取消</Button>
     )
+    const hide = message.loading('检查更新中..', 0);
     CheckUpdate().then(data => {
       console.log(data)
+      hide()
       if (data.avaliable == true) {
         this.setState({
           existNewVersion: true,
@@ -118,6 +120,7 @@ class Header extends React.Component {
         });
       }
     }).catch(err => {
+      hide()
       notification.error({
         message: '更新提示',
         description: err,
