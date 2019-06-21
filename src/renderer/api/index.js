@@ -10,26 +10,38 @@ export function CheckUpdate() {
   ipcRenderer.send('CHECK-UPDATE');
   return new Promise((resolve, reject) => {
     timeoutReject(reject)
-    ipcRenderer.on('CHECK-UPDATE', (event, message) => {
-      if (message.status == 'success') {
-        resolve(message.data)
-      } else {
-        reject(message.msg)
-      }
+    ipcRenderer.once('UPDATE-ERROR', (event, error) => {
+      console.log(error)
+      reject('检查更新出错')
+    })
+    ipcRenderer.once('UPDATE-AVAILABLE', (event, info) => {
+      resolve({
+        avaliable: true,
+        info: info
+      })
+    })
+    ipcRenderer.once('UPDATE-NOT-AVAILABLE', (event, info) => {
+      resolve({
+        avaliable: false,
+        info: info
+      })
     })
   })
 }
 
-export function CheckAvailable() {
-  ipcRenderer.send('CHECK-AVAILABLE');
+export function EmitDownload() {
+  ipcRenderer.send('EMIT-DOWNLOAD');
   return new Promise((resolve, reject) => {
-    timeoutReject(reject)
-    ipcRenderer.on('CHECK-AVAILABLE', (event, message) => {
-      if (message.status == 'success') {
-        resolve(message.data)
-      } else {
-        reject(message.msg)
-      }
+    ipcRenderer.once('UPDATE-DOWNLOADED', (event, info) => {
+      resolve(info)
+    })
+    ipcRenderer.once('UPDATE-ERROR', (event, error) => {
+      console.log(error)
+      reject('下载过程中出错')
     })
   })
+}
+
+export function EmitInstall() {
+  ipcRenderer.send('EMIT-INSTALL');
 }

@@ -10,7 +10,7 @@
   },
   "build": {
     "productName": "electron-trial",
-    "appId": "bendjen.1.0",
+    "appId": "Bendjen",
     "directories": {
       "output": "dist"
     },
@@ -52,7 +52,7 @@
       }
     ]
   },
-  "author": "bendjen",
+  "author": "Bendjen",
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.4.5",

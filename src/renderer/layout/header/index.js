@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Menu, Dropdown, Icon, Progress, Button, Modal, notification } from 'antd';
 import "./index.scss";
-import { CheckUpdate, CheckAvailable } from "../../api"
+import { CheckUpdate, EmitDownload, EmitInstall } from "../../api"
 const { ipcRenderer, remote } = require('electron');
 
 class Header extends React.Component {
@@ -21,18 +21,18 @@ class Header extends React.Component {
 
   componentDidMount() {
     this.downloadProgressListen()
-    // this.checkUpdate()
   }
 
 
   downloadProgressListen() {
-    ipcRenderer.on('DOWNLOAD-PROGRESS', (sys, value) => {
+    ipcRenderer.on('DOWNLOAD-PROGRESS', (sys, progressInfo) => {
+      console.log(progressInfo)
       this.setState({
-        progress: value,
-        available: value >= 100 ? true : false
+        progress: progressInfo.percent,
+        available: progressInfo.percent >= 100 ? true : false
       })
       if (value >= 100) {
-        this.emitUpdate()
+        this.emitInstall()
       }
     })
   }
@@ -46,6 +46,7 @@ class Header extends React.Component {
       available: false,
       newVersion: ''
     })
+    EmitInstall()
     notification.success({
       message: '更新提示',
       description:
@@ -62,28 +63,24 @@ class Header extends React.Component {
     const btnCancel = (
       <Button style={{ marginTop: 10 }} key="cancel" onClick={() => { notification.close('installNotification') }}>取消</Button>
     )
+    this.setState({ available: false, downloading: true })
     notification.close('updateNotification')
-    CheckAvailable().then(data => {
-      if (data.available) {
-        this.setState({ available: true, downloading: false })
-        notification.open({
-          message: '安装提示',
-          duration: null,
-          description:
-            `新版本 ${data.version} 已准备就绪，是否要现在安装更新？`,
-          btn: [btnInstall, btnCancel],
-          key,
-          onClose: () => { notification.close('updateNotification') },
-        });
-      } else if (data.downloading) {
-        this.setState({ available: false, downloading: true })
-      }
+    EmitDownload().then(info => {
+      this.setState({ available: true, downloading: false })
+      notification.open({
+        message: '安装提示',
+        duration: null,
+        description:
+          `新版本 ${info.version} 已准备就绪，是否要现在安装更新？`,
+        btn: [btnInstall, btnCancel],
+        key,
+        onClose: () => { notification.close('updateNotification') },
+      });
     }).catch(err => {
       this.setState({ available: false, downloading: false })
       notification.error({
         message: '安装提示',
-        description:
-          `请求安装失败，失败原因:${err}`,
+        description: err,
       });
     })
   }
@@ -98,21 +95,22 @@ class Header extends React.Component {
       <Button style={{ marginTop: 10 }} key="cancel" onClick={() => { notification.close('updateNotification') }}>取消</Button>
     )
     CheckUpdate().then(data => {
-      if (data.status == 1) {
+      console.log(data)
+      if (data.avaliable == true) {
         this.setState({
           existNewVersion: true,
-          newVersion: data.version
+          newVersion: data.info.version
         })
         notification.open({
           message: '更新提示',
           duration: null,
           description:
-            `electron-trial 存在新版本 ${data.version}，是否要下载更新？`,
+            `electron-trial 存在新版本 ${data.info.version}，是否要下载更新？`,
           btn: [btnUpdate, btnCancel],
           key,
           onClose: () => { notification.close('updateNotification') },
         });
-      } else if (data.status == 0) {
+      } else if (data.avaliable == false) {
         notification.success({
           message: '更新提示',
           description:
@@ -122,8 +120,7 @@ class Header extends React.Component {
     }).catch(err => {
       notification.error({
         message: '更新提示',
-        description:
-          `请求更新失败，失败原因:${err}`,
+        description: err,
       });
     })
   }

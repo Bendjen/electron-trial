@@ -6,7 +6,6 @@ const { ipcRenderer } = require('electron');
 class Window extends React.Component {
   constructor(props) {
     super(props);
-    console.log(process)
     this.state = {
       list: [
         {
