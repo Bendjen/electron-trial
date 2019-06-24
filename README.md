@@ -1,3 +1,5 @@
+安装包下载与简介可以在我的主页中找到: https://bendjen.github.io/parcel-ts/#/about
+
 ## 1.如何减少打包后的安装包体积
 
 不要将node_modules打包进来
